@@ -3,7 +3,10 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollBar";
 
-const SearchExercises = ({setExercises, setBodyPart, bodyPart}) => {
+
+
+
+const SearchExercises = ({ setExercises, bodyPart,  setBodyPart}) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
@@ -11,7 +14,7 @@ const SearchExercises = ({setExercises, setBodyPart, bodyPart}) => {
   useEffect(() => {
     const fetchExercisesData = async () => {
       const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
-
+   
       setBodyParts(['all', ...bodyPartsData]);
     }
 
@@ -27,12 +30,14 @@ const SearchExercises = ({setExercises, setBodyPart, bodyPart}) => {
       );
 
       const searchedExercises = exercisesData.filter(
-        (exercise) =>
-          exercise.name.toLowerCase().includes(search) ||
-          exercise.target.toLowerCase().includes(search) ||
-          exercise.equipment.toLowerCase().includes(search) ||
-          exercise.bodypart.toLowerCase().includes(search)
+        (item) =>
+          item.name.toLowerCase().includes(search) ||
+          item.target.toLowerCase().includes(search) ||
+          item.equipment.toLowerCase().includes(search) ||
+          item.bodyPart.toLowerCase().includes(search),
       );
+
+      window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
 
       setSearch('');
       setExercises(searchedExercises);
@@ -52,13 +57,13 @@ const SearchExercises = ({setExercises, setBodyPart, bodyPart}) => {
       </Typography>
       <Box position="relative" mb="72px">
         <TextField
+          height="76px"
           sx={{
             input: { fontWeight: "700", border: "none", borderRadius: "4px" },
             width: { lg: "800px", xs: "350px" },
-            backgroundColor: "fff",
+            backgroundColor: "#fff",
             borderRadius: "40px",
           }}
-          height="76px"
           value={search}
           onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="Search Exercises"
