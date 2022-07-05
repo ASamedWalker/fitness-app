@@ -10,20 +10,22 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const exercisesPerPage = 6;
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise)
-
+  const currentExercises = exercises.slice(
+    indexOfFirstExercise,
+    indexOfLastExercise
+  );
 
   const paginate = (e, value) => {
     setCurrentPage(value);
 
-    window.scrollTo({top: 1800, behavior: 'smooth'})
-  }
+    window.scrollTo({ top: 1800, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
 
-      if (bodyPart === 'all') {
+      if (bodyPart === "all") {
         exercisesData = await fetchData(
           "https://exercisedb.p.rapidapi.com/exercises",
           exerciseOptions
@@ -39,10 +41,10 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     fetchExercisesData();
   }, [bodyPart]);
 
-
+  console.log(exercises);
   return (
     <Box id="exercises" sx={{ mt: { lg: "110px" } }} mt="50px" p="20px">
-      <Typography variant="h3" mb="46px">
+      <Typography varient="h3" mb="46px">
         Showing Results
       </Typography>
       <Stack
@@ -57,7 +59,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       </Stack>
       <Stack mt="100px" alignItems="center">
         {exercises.length > 9 && (
-          <Pagination 
+          <Pagination
             color="standard"
             shape="rounded"
             defaultPage={1}
